@@ -70,7 +70,7 @@ const TopBar: React.FC = () => {
     return (
         <>
             {/* TopBar для десктопа */}
-            <div className="hidden lg:flex w-full h-[70px] backdrop-blur-[30px] bg-[#111111]/80 border-b border-gray-800/50 sticky top-0 z-30">
+            <div className="hidden lg:flex w-full h-[70px] backdrop-blur-[30px] bg-[#111111]/80 border-b border-gray-800/50 z-30">
                 <div className="w-full h-full px-4 lg:px-8 flex items-center justify-between">
                     {/* Левая часть - хлебные крошки */}
                     <div className="w-[232px] h-[44px] flex flex-row justify-start items-center gap-4">

@@ -208,7 +208,7 @@ const Sidebar: React.FC = () => {
     // Десктопная версия
     if (!isMobile) {
         return (
-            <aside className="hidden lg:flex w-[300px] h-screen bg-[#212121] flex-col flex-shrink-0">
+            <aside className="w-[300px] h-screen bg-[#212121] flex-col flex-shrink-0">
                 {renderSidebarContent()}
             </aside>
         );

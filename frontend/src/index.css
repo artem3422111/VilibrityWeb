@@ -19,6 +19,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
 
   /* Скрытие скроллбара */
@@ -169,5 +173,22 @@ img {
   main {
     min-height: calc(100vh - 8rem);
     /* Высота экрана минус TopBar и BottomBar */
+  }
+  body {
+    overflow: hidden;
+  }
+
+  /* Основная область контента с прокруткой */
+  .lg\:pl-\[300px\]>div:last-child {
+    overflow-y: auto;
+    height: calc(100vh - 70px);
+    /* Высота экрана минус TopBar */
+    margin-top: 70px;
+    /* Отступ сверху для TopBar */
+  }
+
+  /* Убираем отступы, которые теперь задаются через Layout */
+  .lg\:pl-\[300px\]>div:last-child>div {
+    padding-top: 0 !important;
   }
 }

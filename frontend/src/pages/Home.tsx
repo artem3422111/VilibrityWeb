@@ -3,21 +3,21 @@ import React from 'react';
 import { Play, Star, TrendingUp, Clock, ChevronRight } from 'lucide-react';
 
 const Home: React.FC = () => {
-    // const trendingAnime = [
-    //     { id: 1, title: 'Атака титанов', episodes: 75, rating: 9.0, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=Titans' },
-    //     { id: 2, title: 'Наруто', episodes: 720, rating: 8.7, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Naruto' },
-    //     { id: 3, title: 'Ван Пис', episodes: 1100, rating: 8.8, image: 'https://via.placeholder.com/200x300/9932cc/ffffff?text=One+Piece' },
-    //     { id: 4, title: 'Мастера меча онлайн', episodes: 96, rating: 8.3, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=SAO' },
-    //     { id: 5, title: 'Хоримия', episodes: 13, rating: 8.8, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Horimiya' },
-    // ];
+    const trendingAnime = [
+        { id: 1, title: 'Атака титанов', episodes: 75, rating: 9.0, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=Titans' },
+        { id: 2, title: 'Наруто', episodes: 720, rating: 8.7, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Naruto' },
+        { id: 3, title: 'Ван Пис', episodes: 1100, rating: 8.8, image: 'https://via.placeholder.com/200x300/9932cc/ffffff?text=One+Piece' },
+        { id: 4, title: 'Мастера меча онлайн', episodes: 96, rating: 8.3, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=SAO' },
+        { id: 5, title: 'Хоримия', episodes: 13, rating: 8.8, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Horimiya' },
+    ];
 
-    // const popularGenres = [
-    //     { name: 'Экшен', count: 1250, color: 'from-red-500 to-orange-500' },
-    //     { name: 'Приключения', count: 980, color: 'from-blue-500 to-cyan-500' },
-    //     { name: 'Комедия', count: 1560, color: 'from-yellow-500 to-amber-500' },
-    //     { name: 'Драма', count: 870, color: 'from-purple-500 to-pink-500' },
-    //     { name: 'Фэнтези', count: 1340, color: 'from-green-500 to-emerald-500' },
-    // ];
+    const popularGenres = [
+        { name: 'Экшен', count: 1250, color: 'from-red-500 to-orange-500' },
+        { name: 'Приключения', count: 980, color: 'from-blue-500 to-cyan-500' },
+        { name: 'Комедия', count: 1560, color: 'from-yellow-500 to-amber-500' },
+        { name: 'Драма', count: 870, color: 'from-purple-500 to-pink-500' },
+        { name: 'Фэнтези', count: 1340, color: 'from-green-500 to-emerald-500' },
+    ];
 
     return (
         <div className="space-y-6 lg:space-y-8 w-full overflow-x-hidden">
@@ -100,7 +100,7 @@ const Home: React.FC = () => {
             </div> */}
 
             {/* Популярные сейчас */}
-            {/* <div className="bg-[#212121] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[#3a3a3a]">
+            <div className="bg-[#212121] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[#3a3a3a]">
                 <div className="flex items-center justify-between mb-4 lg:mb-6">
                     <h2 className="text-lg lg:text-2xl font-bold text-white font-inter">Популярные сейчас</h2>
                     <button className="flex items-center gap-1 lg:gap-2 text-[#00f8ff] hover:text-[#00ccff] transition-colors">
@@ -137,10 +137,10 @@ const Home: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div> */}
+            </div>
 
             {/* Популярные жанры */}
-            {/* <div className="bg-[#212121] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[#3a3a3a]">
+            <div className="bg-[#212121] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[#3a3a3a]">
                 <h2 className="text-lg lg:text-2xl font-bold text-white font-inter mb-4 lg:mb-6">Популярные жанры</h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
@@ -161,10 +161,10 @@ const Home: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div> */}
+            </div>
 
             {/* Призыв к регистрации */}
-            {/* <div className="relative overflow-hidden rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#212121] to-[#2a2a2a] p-4 lg:p-8 border border-[#641f86] w-full">
+            <div className="relative overflow-hidden rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#212121] to-[#2a2a2a] p-4 lg:p-8 border border-[#641f86] w-full">
                 <div className="relative z-10 text-center">
                     <h2 className="mb-3 lg:mb-4 text-xl lg:text-3xl font-bold text-white font-inter">
                         Присоединяйтесь к сообществу
@@ -185,7 +185,7 @@ const Home: React.FC = () => {
 
                 <div className="absolute -right-5 -top-5 w-20 h-20 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-[#641f86]/30 to-transparent" />
                 <div className="absolute -left-5 -bottom-5 w-20 h-20 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-[#00f8ff]/30 to-transparent" />
-            </div> */}
+            </div>
         </div>
     );
 };
