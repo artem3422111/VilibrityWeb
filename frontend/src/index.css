@@ -100,10 +100,74 @@ img {
   height: auto;
 }
 
-/* Предотвращаем горизонтальный скролл на мобильных */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(180, 70, 230, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 35px rgba(180, 70, 230, 0.9);
+  }
+}
+
+/* Плавные переходы для BottomBar */
+.bottom-bar-enter {
+  transform: translateY(100%);
+}
+
+.bottom-bar-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-out;
+}
+
+.bottom-bar-exit {
+  transform: translateY(0);
+}
+
+.bottom-bar-exit-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in;
+}
+
+/* Предотвращение горизонтального скролла на мобильных */
 @media (max-width: 640px) {
-  .mobile-no-scroll {
+  body {
     overflow-x: hidden;
-    width: 100%;
+  }
+}
+
+.mobile-safe-area {
+  padding-top: 4rem;
+  /* Для TopBar */
+  padding-bottom: 5rem;
+  /* Для BottomBar */
+}
+
+@media (min-width: 1024px) {
+  .mobile-safe-area {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Гарантируем, что контент не скрывается под фиксированными элементами */
+@media (max-width: 1024px) {
+  main {
+    min-height: calc(100vh - 8rem);
+    /* Высота экрана минус TopBar и BottomBar */
   }
 }

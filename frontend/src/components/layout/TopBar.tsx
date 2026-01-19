@@ -64,7 +64,7 @@ const TopBar: React.FC = () => {
     // Данные валют пользователя
     const userCurrency = {
         vic: 1250,
-        vig: 85
+        vig: 185
     };
 
     return (
@@ -112,29 +112,29 @@ const TopBar: React.FC = () => {
                         </button>
 
                         {/* Разделитель */}
-                        <div className="hidden lg:block w-px h-6 bg-gray-700/50 mx-1"></div>
+                        <div className="hidden lg:block w-px h-8 bg-gray-700/50 mx-1"></div>
 
                         {/* ViCoin (бесплатная валюта) */}
-                        <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30 hover:border-yellow-700/50 transition-colors group cursor-pointer">
+                        <div className="hidden lg:flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border border-yellow-800/30 hover:border-yellow-700/50 transition-colors group cursor-pointer">
                             <div className="relative">
-                                <Coins className="w-4 h-4 lg:w-5 lg:h-5 text-yellow-400" />
+                                <Coins className="w-2 h-2 lg:w-5 lg:h-5 text-yellow-400" />
                                 <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-sm group-hover:bg-yellow-400/30 transition-colors"></div>
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-yellow-300 font-inter font-bold text-sm">{userCurrency.vic}</span>
-                                <span className="text-yellow-500/70 font-inter text-xs">ViC</span>
+                                {/* <span className="text-yellow-500/70 font-inter text-xs">ViC</span> */}
                             </div>
                         </div>
 
                         {/* ViGem (платная валюта) */}
-                        <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30 hover:border-purple-700/50 transition-colors group cursor-pointer">
+                        <div className="hidden lg:flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30 hover:border-purple-700/50 transition-colors group cursor-pointer">
                             <div className="relative">
                                 <Gem className="w-4 h-4 lg:w-5 lg:h-5 text-purple-400" />
                                 <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-sm group-hover:bg-purple-400/30 transition-colors"></div>
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-purple-300 font-inter font-bold text-sm">{userCurrency.vig}</span>
-                                <span className="text-purple-500/70 font-inter text-xs">ViG</span>
+                                {/* <span className="text-purple-500/70 font-inter text-xs">ViG</span> */}
                             </div>
                         </div>
 
@@ -233,7 +233,6 @@ const TopBar: React.FC = () => {
                 </div>
             </div>
 
-            {/* TopBar для мобильных устройств */}
             <div className="lg:hidden fixed top-0 left-0 right-0 h-16 backdrop-blur-[30px] bg-[#111111]/80 border-b border-gray-800/50 z-40">
                 <div className="w-full h-full px-4 flex items-center justify-between">
                     {/* Левая часть: хлебные крошки */}
@@ -254,7 +253,7 @@ const TopBar: React.FC = () => {
                         </button>
 
                         {/* Уведомления */}
-                        <button className="relative w-10 h-10 flex items-center justify-center">
+                        <button className="relative w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors">
                             <Bell className="w-5 h-5 text-gray-300" />
                             {notificationsCount > 0 && (
                                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
@@ -263,10 +262,20 @@ const TopBar: React.FC = () => {
                             )}
                         </button>
 
-                        {/* Профиль */}
-                        <button className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00f8ff] to-[#9932cc] flex items-center justify-center">
-                            <User className="w-5 h-5 text-white" />
-                        </button>
+                        {/* Валюты (заменяем иконку пользователя) */}
+                        <div className="flex items-center gap-2">
+                            {/* ViC (бесплатная валюта) */}
+                            <div className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30">
+                                <Coins className="w-4 h-4 text-yellow-400" />
+                                <span className="text-yellow-300 font-inter font-bold text-sm">{userCurrency.vic}</span>
+                            </div>
+
+                            {/* ViG (платная валюта) */}
+                            <div className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30">
+                                <Gem className="w-4 h-4 text-purple-400" />
+                                <span className="text-purple-300 font-inter font-bold text-sm">{userCurrency.vig}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -280,6 +289,7 @@ const TopBar: React.FC = () => {
                                 placeholder="Поиск аниме..."
                                 className="w-full h-12 rounded-[15px] bg-[#222222] border border-gray-700/50 pl-12 pr-4 text-gray-300 placeholder:text-gray-500 outline-none"
                                 autoFocus
+                                onBlur={() => setSearchOpen(false)}
                             />
                         </div>
                     </div>

@@ -16,7 +16,7 @@ const Categories: React.FC = () => {
     ];
 
     return (
-        <div>
+        <div className="pt-4 lg:pt-0">
             <h1 className="mb-6 text-3xl font-bold text-white">Категории</h1>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {categories.map((category) => (
