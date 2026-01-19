@@ -4,11 +4,11 @@ import { Play, Star, TrendingUp, Clock, ChevronRight } from 'lucide-react';
 
 const Home: React.FC = () => {
     const trendingAnime = [
-        { id: 1, title: 'Атака титанов', episodes: 75, rating: 9.0, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=Titans' },
-        { id: 2, title: 'Наруто', episodes: 720, rating: 8.7, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Naruto' },
-        { id: 3, title: 'Ван Пис', episodes: 1100, rating: 8.8, image: 'https://via.placeholder.com/200x300/9932cc/ffffff?text=One+Piece' },
-        { id: 4, title: 'Мастера меча онлайн', episodes: 96, rating: 8.3, image: 'https://via.placeholder.com/200x300/641f86/ffffff?text=SAO' },
-        { id: 5, title: 'Хоримия', episodes: 13, rating: 8.8, image: 'https://via.placeholder.com/200x300/00f8ff/000000?text=Horimiya' },
+        { id: 1, title: 'Атака титанов', episodes: 75, rating: 9.0, image: '' },
+        { id: 2, title: 'Наруто', episodes: 720, rating: 8.7, image: '' },
+        { id: 3, title: 'Ван Пис', episodes: 1100, rating: 8.8, image: '' },
+        { id: 4, title: 'Мастера меча онлайн', episodes: 96, rating: 8.3, image: '' },
+        { id: 5, title: 'Хоримия', episodes: 13, rating: 8.8, image: '' },
     ];
 
     const popularGenres = [
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Статистика */}
-            {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                 <div className="rounded-xl lg:rounded-2xl bg-[#212121] p-3 lg:p-6 border border-[#3a3a3a] hover:border-[#641f86] transition-colors">
                     <div className="flex items-center gap-2 lg:gap-4">
                         <div className="rounded-lg lg:rounded-xl bg-gradient-to-br from-[#00f8ff] to-[#0088cc] p-2 lg:p-3">
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
             {/* Популярные сейчас */}
             <div className="bg-[#212121] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[#3a3a3a]">

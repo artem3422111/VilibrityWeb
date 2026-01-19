@@ -1,7 +1,7 @@
 // frontend/src/components/layout/BottomBar.tsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Flame, Clock, Heart, Folder, User2 } from 'lucide-react';
+import { Home, Flame, Heart, Folder, User2 } from 'lucide-react';
 
 const BottomBar: React.FC = () => {
     const location = useLocation();
@@ -26,7 +26,6 @@ const BottomBar: React.FC = () => {
     };
 
     const activePage = getActivePageFromPath(location.pathname);
-    const activeIndex = navButtons.findIndex(btn => btn.label === activePage);
 
     return (
         <>
@@ -88,14 +87,6 @@ const BottomBar: React.FC = () => {
 
                                                     {/* Иконка */}
                                                     <Icon className="w-7 h-7 text-white relative z-10" />
-
-                                                    {/* Точечный узор */}
-                                                    <div className="absolute inset-0 rounded-full overflow-hidden opacity-20">
-                                                        <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white" />
-                                                        <div className="absolute top-1 right-1 w-1 h-1 rounded-full bg-white" />
-                                                        <div className="absolute bottom-1 left-1 w-1 h-1 rounded-full bg-white" />
-                                                        <div className="absolute bottom-1 right-1 w-1 h-1 rounded-full bg-white" />
-                                                    </div>
                                                 </div>
 
                                                 {/* Текст под кнопкой */}
@@ -119,9 +110,6 @@ const BottomBar: React.FC = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Отступ снизу для контента, чтобы не перекрывался BottomBar */}
-            <div className="lg:hidden h-20" />
         </>
     );
 };

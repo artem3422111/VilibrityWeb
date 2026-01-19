@@ -17,6 +17,19 @@
   * {
     box-sizing: border-box;
   }
+
+  /* Глобально убираем скроллбары */
+  * {
+    -ms-overflow-style: none;
+    /* IE и Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari и Opera */
+  }
 }
 
 html {
@@ -25,7 +38,7 @@ html {
 
 @layer utilities {
 
-  /* Скрытие скроллбара */
+  /* Скрытие скроллбара (теперь избыточно, но оставляем) */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -78,25 +91,8 @@ html {
   }
 }
 
-/* Улучшенные стили для скроллбара */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #212121;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #641f86, #9932cc);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #7a2399, #b43fe6);
-}
+/* УБИРАЕМ ВСЕ СТИЛИ ДЛЯ СКРОЛЛБАРА */
+/* Удаляем все ::-webkit-scrollbar правила */
 
 /* Гарантируем, что все изображения адаптивны */
 img {
@@ -152,13 +148,27 @@ img {
   body {
     overflow-x: hidden;
   }
+
+  /* Убираем скроллбары для всех элементов на мобильных */
+  div,
+  section,
+  main,
+  aside {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  div::-webkit-scrollbar,
+  section::-webkit-scrollbar,
+  main::-webkit-scrollbar,
+  aside::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .mobile-safe-area {
   padding-top: 4rem;
-  /* Для TopBar */
   padding-bottom: 5rem;
-  /* Для BottomBar */
 }
 
 @media (min-width: 1024px) {
@@ -172,8 +182,8 @@ img {
 @media (max-width: 1024px) {
   main {
     min-height: calc(100vh - 8rem);
-    /* Высота экрана минус TopBar и BottomBar */
   }
+
   body {
     overflow: hidden;
   }
@@ -182,9 +192,13 @@ img {
   .lg\:pl-\[300px\]>div:last-child {
     overflow-y: auto;
     height: calc(100vh - 70px);
-    /* Высота экрана минус TopBar */
     margin-top: 70px;
-    /* Отступ сверху для TopBar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .lg\:pl-\[300px\]>div:last-child::-webkit-scrollbar {
+    display: none;
   }
 
   /* Убираем отступы, которые теперь задаются через Layout */

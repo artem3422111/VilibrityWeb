@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 const TopBar: React.FC = () => {
     const location = useLocation();
     const [userMenuOpen, setUserMenuOpen] = useState(false);
-    const [notificationsCount, setNotificationsCount] = useState(3);
+    const [notificationsCount] = useState(3);
     const [searchOpen, setSearchOpen] = useState(false);
 
     // Функция для получения хлебных крошек на основе текущего пути
@@ -265,13 +265,13 @@ const TopBar: React.FC = () => {
                         {/* Валюты (заменяем иконку пользователя) */}
                         <div className="flex items-center gap-2">
                             {/* ViC (бесплатная валюта) */}
-                            <div className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30">
+                            <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30">
                                 <Coins className="w-4 h-4 text-yellow-400" />
                                 <span className="text-yellow-300 font-inter font-bold text-sm">{userCurrency.vic}</span>
                             </div>
 
                             {/* ViG (платная валюта) */}
-                            <div className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30">
+                            <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30">
                                 <Gem className="w-4 h-4 text-purple-400" />
                                 <span className="text-purple-300 font-inter font-bold text-sm">{userCurrency.vig}</span>
                             </div>
