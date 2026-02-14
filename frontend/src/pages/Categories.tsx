@@ -1,6 +1,4 @@
-// frontend/src/pages/Categories.tsx
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Swords, Compass, Laugh, Drama, Sparkles, Heart, Rocket, AlertTriangle } from 'lucide-react';
 
 const Categories: React.FC = () => {
@@ -17,25 +15,34 @@ const Categories: React.FC = () => {
 
     return (
         <div className="pt-4 lg:pt-0">
-            <h1 className="mb-6 text-3xl font-bold text-white">Категории</h1>
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold text-white mb-2">Категории</h1>
+                <p className="text-gray-400">Исследуйте аниме по различным жанрам и категориям</p>
+            </div>
+
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {categories.map((category) => (
-                    <Card key={category.name} className="border-gray-800 bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
-                        <CardHeader>
-                            <div className="flex items-center justify-between">
-                                <div className={`p-3 rounded-lg ${category.color}`}>
-                                    {category.icon}
-                                </div>
-                                <span className="text-2xl font-bold text-white">{category.count}</span>
+                    <div
+                        key={category.name}
+                        className="border border-gray-800 rounded-xl bg-gray-900/50 hover:bg-gray-800/50 transition-colors p-6 cursor-pointer hover:border-purple-600/50 hover:scale-[1.02] transition-all duration-300"
+                        onClick={() => console.log(`Navigate to category: ${category.name}`)}
+                    >
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`p-3 rounded-lg ${category.color}`}>
+                                {category.icon}
                             </div>
-                            <CardTitle className="text-white mt-4">{category.name}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-gray-400">
-                                Нажмите, чтобы просмотреть все аниме в категории "{category.name}"
-                            </p>
-                        </CardContent>
-                    </Card>
+                            <span className="text-2xl font-bold text-white">{category.count}</span>
+                        </div>
+                        <h3 className="text-white text-xl font-bold mb-3">{category.name}</h3>
+                        <p className="text-gray-400 text-sm">
+                            Нажмите, чтобы просмотреть все аниме в категории "{category.name}"
+                        </p>
+                        <div className="mt-4 pt-4 border-t border-gray-800">
+                            <button className="text-purple-400 hover:text-purple-300 text-sm font-semibold">
+                                Просмотреть →
+                            </button>
+                        </div>
+                    </div>
                 ))}
             </div>
         </div>

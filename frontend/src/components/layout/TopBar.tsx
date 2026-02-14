@@ -63,8 +63,8 @@ const TopBar: React.FC = () => {
 
     // Данные валют пользователя
     const userCurrency = {
-        vic: 1250,
-        vig: 185
+        vic: 1024,
+        vig: 128
     };
 
     return (
@@ -232,28 +232,37 @@ const TopBar: React.FC = () => {
                     </div>
                 </div>
             </div>
-
+            
+            {/* TopBar для телефона */}
             <div className="lg:hidden fixed top-0 left-0 right-0 h-16 backdrop-blur-[30px] bg-[#111111]/80 border-b border-gray-800/50 z-40">
                 <div className="w-full h-full px-4 flex items-center justify-between">
-                    {/* Левая часть: хлебные крошки */}
-                    <div className="flex-1 overflow-hidden">
-                        <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
-                            {renderBreadcrumbs()}
+                    {/* Левая часть: валюты */}
+                    <div className="flex items-center gap-4">
+                        {/* ViC (бесплатная валюта) */}
+                        <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30">
+                            <Coins className="w-4 h-4 text-yellow-400" />
+                            <span className="text-yellow-300 font-inter font-bold text-sm">{userCurrency.vic}</span>
+                        </div>
+
+                        {/* ViG (платная валюта) */}
+                        <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30">
+                            <Gem className="w-4 h-4 text-purple-400" />
+                            <span className="text-purple-300 font-inter font-bold text-sm">{userCurrency.vig}</span>
                         </div>
                     </div>
 
                     {/* Правая часть: иконки */}
-                    <div className="flex items-center gap-3 ml-4">
+                    <div className="flex items-center gap-2">
                         {/* Кнопка поиска */}
                         <button
                             onClick={() => setSearchOpen(!searchOpen)}
-                            className="w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors"
+                            className="w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-full transition-colors"
                         >
                             <Search className="w-5 h-5 text-gray-300" />
                         </button>
 
                         {/* Уведомления */}
-                        <button className="relative w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors">
+                        <button className="relative w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-full transition-colors">
                             <Bell className="w-5 h-5 text-gray-300" />
                             {notificationsCount > 0 && (
                                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
@@ -262,32 +271,22 @@ const TopBar: React.FC = () => {
                             )}
                         </button>
 
-                        {/* Валюты (заменяем иконку пользователя) */}
-                        <div className="flex items-center gap-2">
-                            {/* ViC (бесплатная валюта) */}
-                            <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-yellow-900/20 to-yellow-800/10 border border-yellow-800/30">
-                                <Coins className="w-4 h-4 text-yellow-400" />
-                                <span className="text-yellow-300 font-inter font-bold text-sm">{userCurrency.vic}</span>
-                            </div>
-
-                            {/* ViG (платная валюта) */}
-                            <div className="flex items-center gap-1 px-[18px] py-[8px] rounded-full bg-gradient-to-r from-purple-900/20 to-purple-800/10 border border-purple-800/30">
-                                <Gem className="w-4 h-4 text-purple-400" />
-                                <span className="text-purple-300 font-inter font-bold text-sm">{userCurrency.vig}</span>
-                            </div>
-                        </div>
+                        {/* Настройки */}
+                        <button className="w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-full transition-colors">
+                            <Settings className="w-5 h-5 text-gray-300" />
+                        </button>
                     </div>
                 </div>
 
                 {/* Строка поиска для мобильных устройств */}
                 {searchOpen && (
-                    <div className="absolute top-full left-0 right-0 p-4 bg-[#111111] border-b border-gray-800/50">
+                    <div className="absolute top-full left-0 right-0 p-3 bg-[#111111] border-b border-gray-800/90 z-50">
                         <div className="relative">
-                            <Search className="absolute left-4 top-1/2 w-5 h-5 -translate-y-1/2 text-gray-500" />
+                            <Search className="absolute left-4 top-1/2 w-4 h-4 -translate-y-1/2 text-gray-500" />
                             <input
                                 type="text"
                                 placeholder="Поиск аниме..."
-                                className="w-full h-12 rounded-[15px] bg-[#222222] border border-gray-700/50 pl-12 pr-4 text-gray-300 placeholder:text-gray-500 outline-none"
+                                className="w-full h-10 rounded-[15px] bg-[#222222] border border-gray-700/90 pl-12 pr-4 text-gray-300 placeholder:text-gray-500 outline-none"
                                 autoFocus
                                 onBlur={() => setSearchOpen(false)}
                             />
