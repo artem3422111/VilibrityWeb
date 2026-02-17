@@ -53,5 +53,32 @@ export const watchingData: WatchingAnime[] = [
         totalEpisodes: 138,
         watchedPercent: 11,
         timeRemaining: 1230
+    },
+    {
+        id: 'my-hero-academia',
+        title: 'Моя геройская академия',
+        imageUrl: 'https://images.unsplash.com/photo-1591839350822-48828a7f7584?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+        currentEpisode: 15,
+        totalEpisodes: 138,
+        watchedPercent: 11,
+        timeRemaining: 1230
+    },
+    {
+        id: 'my-hero-academia',
+        title: 'Моя геройская академия',
+        imageUrl: 'https://images.unsplash.com/photo-1591839350822-48828a7f7584?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+        currentEpisode: 15,
+        totalEpisodes: 138,
+        watchedPercent: 11,
+        timeRemaining: 1230
+    },
+    {
+        id: 'my-hero-academia',
+        title: 'Моя геройская академия',
+        imageUrl: 'https://images.unsplash.com/photo-1591839350822-48828a7f7584?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+        currentEpisode: 15,
+        totalEpisodes: 138,
+        watchedPercent: 11,
+        timeRemaining: 1230
     }
 ];
