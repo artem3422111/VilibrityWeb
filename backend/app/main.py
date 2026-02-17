@@ -33,6 +33,16 @@ app = FastAPI(
     debug=settings.DEBUG
 )
 
+# Root endpoint
+@app.get("/")
+async def root():
+    """Root endpoint"""
+    return {
+        "message": "Vilibrity API",
+        "version": "1.0.0",
+        "status": "ok"
+    }
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
