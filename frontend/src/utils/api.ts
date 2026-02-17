@@ -7,8 +7,9 @@ interface ApiResponse<T> {
     fromCache: boolean;
 }
 
-// Базовый URL для API (используем порт 8000 чтобы избежать конфликта)
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+// Базовый URL для API (берем из env, fallback на backend domain)
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "https://vilibrityweb.onrender.com/api/v1";
 
 // Преобразование рейтинга из 100-балльной системы в 5-балльную
 const convertRating = (score: number | undefined): number => {
