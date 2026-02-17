@@ -145,7 +145,8 @@ const HeroSection: React.FC = () => {
                 style={{
                     backgroundImage: `url("${anime?.banner_url || anime?.image_url}")`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat'
                 }}
             />
 
