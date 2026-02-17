@@ -73,14 +73,14 @@ const TopBar: React.FC = () => {
             <div className="hidden lg:flex w-full h-[70px] backdrop-blur-[30px] bg-[#111111]/80 border-b border-gray-800/50 z-30">
                 <div className="w-full h-full px-4 lg:px-8 flex items-center justify-between">
                     {/* Левая часть - хлебные крошки */}
-                    <div className="w-[232px] h-[44px] flex flex-row justify-start items-center gap-4">
+                    <div className="w-[250px] h-[44px] flex flex-row justify-start items-center gap-4">
                         <div className="flex items-center gap-4">
                             {renderBreadcrumbs()}
                         </div>
                     </div>
 
                     {/* Центральная часть - поиск */}
-                    <div className="flex-1 max-w-[600px] h-[44px] rounded-[15px] bg-[#222222] flex items-center px-4 gap-3 border border-gray-700/50 hover:border-gray-600/50 transition-colors mx-4">
+                    <div className="flex-1 max-w-[700px] h-[44px] rounded-[15px] bg-[#222222] flex items-center px-4 gap-3 border border-gray-700/50 hover:border-gray-600/50 transition-colors mx-4">
                         <Search className="w-5 h-5 lg:w-6 lg:h-6 text-gray-500" />
                         <input
                             type="text"
@@ -92,7 +92,7 @@ const TopBar: React.FC = () => {
                     {/* Правая часть - валюта, иконки и пользователь */}
                     <div className="flex flex-row justify-end items-center gap-2 lg:gap-4 py-[5px]">
                         {/* Уведомления с счетчиком */}
-                        <div className="relative hidden lg:block">
+                        {/* <div className="relative hidden lg:block">
                             <button className="w-10 h-10 flex items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors group relative">
                                 <Bell className="w-5 h-5 lg:w-6 lg:h-6 text-gray-300 group-hover:text-white transition-colors" />
                                 {notificationsCount > 0 && (
@@ -104,12 +104,12 @@ const TopBar: React.FC = () => {
                                     </>
                                 )}
                             </button>
-                        </div>
+                        </div> */}
 
                         {/* Настройки */}
-                        <button className="hidden lg:flex w-10 h-10 items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors group">
+                        {/* <button className="hidden lg:flex w-10 h-10 items-center justify-center hover:bg-gray-800/50 rounded-lg transition-colors group">
                             <Settings className="w-5 h-5 lg:w-6 lg:h-6 text-gray-300 group-hover:text-white transition-colors group-hover:rotate-90 transition-transform duration-300" />
-                        </button>
+                        </button> */}
 
                         {/* Разделитель */}
                         <div className="hidden lg:block w-px h-8 bg-gray-700/50 mx-1"></div>
