@@ -8,7 +8,10 @@ const ContinueWatchingSection: React.FC = () => {
     // Обработчик прокрутки колесиком мыши
     const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
         if (containerRef.current) {
-            e.preventDefault();
+            // Проверяем, можно ли предотвратить стандартное поведение
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             containerRef.current.scrollLeft += e.deltaY;
         }
     }, []);
