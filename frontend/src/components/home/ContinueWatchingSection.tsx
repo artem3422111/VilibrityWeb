@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import ContinueWatchingCard from './ContinueWatchingCard';
 import { watchingData } from './data/watchingData';
 
 const ContinueWatchingSection: React.FC = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    
+    // Обработчик прокрутки колесиком мыши
+    const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+        if (containerRef.current) {
+            e.preventDefault();
+            containerRef.current.scrollLeft += e.deltaY;
+        }
+    }, []);
+
     // Фильтруем только те аниме, которые были начаты (watchedPercent > 0)
     const activeAnime = watchingData.filter(anime => anime.watchedPercent > 0);
 
@@ -21,7 +31,11 @@ const ContinueWatchingSection: React.FC = () => {
             </div>
 
             {/* Карточки */}
-            <div className="w-full flex flex-row justify-start items-start gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide">
+            <div 
+                ref={containerRef}
+                className="w-full flex flex-row justify-start items-start gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide"
+                onWheel={handleWheel}
+            >
                 {activeAnime.map((anime) => (
                     <ContinueWatchingCard
                         key={anime.id}
