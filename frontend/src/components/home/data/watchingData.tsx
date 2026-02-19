@@ -12,7 +12,7 @@ export const watchingData: WatchingAnime[] = [
     {
         id: 'dr-stone-final',
         title: 'Доктор Стоун: Финальная битва',
-        imageUrl: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1531259683059-b1a7b98e147a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
         currentEpisode: 12,
         totalEpisodes: 12,
         watchedPercent: 95,
