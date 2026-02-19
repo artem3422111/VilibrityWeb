@@ -1,3 +1,4 @@
+// frontend/src/components/layout/Footer.tsx
 import React from 'react';
 import {
     Heart,
@@ -21,7 +22,7 @@ const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-full relative overflow-hidden bg-[#111111]">
+        <footer className="w-full relative overflow-hidden bg-[#111111] mt-8 lg:mt-12">
             {/* Градиентный фон */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#111111] via-[#1a0a2a] to-[#2d1b69] opacity-90"></div>
 
@@ -141,7 +142,7 @@ const Footer: React.FC = () => {
                             <Mail className="w-4 h-4 text-blue-400" />
                             Контакты
                         </h4>
-
+                        
                         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                             <a
                                 href="mailto:support@vilibrity.com"
@@ -155,7 +156,7 @@ const Footer: React.FC = () => {
                                     <div className="text-sm truncate">support@vilibrity.com</div>
                                 </div>
                             </a>
-
+                            
                             <a
                                 href="https://t.me/VilibrityOfficial"
                                 target="_blank"

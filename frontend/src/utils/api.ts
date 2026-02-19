@@ -9,7 +9,7 @@ interface ApiResponse<T> {
 
 // Базовый URL для API (берем из env, fallback на localhost)
 const API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+    import.meta.env.VITE_API_BASE_URL;
 
 // Преобразование рейтинга из 100-балльной системы в 5-балльную
 const convertRating = (score: number | undefined): number => {

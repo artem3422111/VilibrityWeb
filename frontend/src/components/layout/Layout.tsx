@@ -43,14 +43,13 @@ const Layout: React.FC = () => {
                     </div>
 
                     {/* Контент страницы с правильными отступами */}
-                    <div className="pt-4 lg:pt-[70px] pb-20 lg:pb-0 flex-1 overflow-y-auto">
-                        <div className="p-4 lg:p-6 lg:pb-8">
+                    <main className="flex-1 w-full pt-16 lg:pt-[70px] pb-20 lg:pb-0">
+                        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
                             <Outlet />
                         </div>
-                    </div>
-
-                    {/* Footer - теперь внутри основной области с отступом от сайдбара */}
-                    <Footer />
+                        {/* Footer внутри main, но после Outlet */}
+                        <Footer />
+                    </main>
                 </div>
             </div>
 

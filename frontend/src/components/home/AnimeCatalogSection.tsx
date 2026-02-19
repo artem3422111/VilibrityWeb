@@ -1,7 +1,7 @@
+// frontend/src/components/home/AnimeCatalogSection.tsx
 import React, { useState, useEffect } from 'react';
 import CategorySelector from './CategorySelector';
 import AnimeCard from './AnimeCard';
-import { RefreshCw } from 'lucide-react';
 
 interface AnimeItem {
     id: string;
@@ -43,7 +43,16 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [currentCategory, setCurrentCategory] = useState<string>('all');
-    const [refreshing, setRefreshing] = useState(false);
+
+    // Категории для мобильной навигации
+    const mobileCategories = [
+        { id: 'all', label: 'Все', icon: '📺' },
+        { id: 'trending', label: 'В тренде', icon: '🔥' },
+        { id: 'new', label: 'Новинки', icon: '🆕' },
+        { id: 'popular', label: 'Популярное', icon: '⭐' },
+        { id: 'action', label: 'Экшен', icon: '⚔️' },
+        { id: 'romance', label: 'Романтика', icon: '❤️' },
+    ];
 
     // Статические данные для демонстрации
     const staticAnime: AnimeItem[] = [
@@ -172,8 +181,8 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
 
             // Фильтрация данных по категории
             let filteredAnime = [...staticAnime];
-            
-            switch(category) {
+
+            switch (category) {
                 case 'trending':
                     filteredAnime = filteredAnime.filter(a => a.is_trending);
                     break;
@@ -189,7 +198,6 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
             }
 
             setAnimeList(filteredAnime);
-            console.log(`Данные каталога получены (${category}):`, filteredAnime.length, 'аниме');
         } catch (err) {
             console.error('Ошибка при загрузке каталога:', err);
             setError('Не удалось загрузить каталог аниме');
@@ -200,15 +208,8 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
     };
 
     const handleCategoryChange = async (category: string) => {
-        console.log('Категория изменена:', category);
         setCurrentCategory(category);
         await fetchAnimeCatalog(category);
-    };
-
-    const handleRefresh = async () => {
-        setRefreshing(true);
-        await fetchAnimeCatalog(currentCategory);
-        setRefreshing(false);
     };
 
     useEffect(() => {
@@ -216,86 +217,160 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
     }, []);
 
     return (
-        <div className={`w-full max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8 ${hasPreviousSection ? 'mt-[20px]' : 'mt-[35px]'} pb-8`}>
-            {/* Заголовок секции */}
-            <div className="mb-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-white font-inter text-2xl sm:text-3xl lg:text-[28px] font-bold leading-tight">
+        <>
+            {/* Десктопная версия (lg и выше) */}
+            <div className="hidden lg:block w-full max-w-[1530px] mx-auto px-8">
+                <div className={`${hasPreviousSection ? 'mt-[20px]' : 'mt-[35px]'} pb-8`}>
+                    {/* Заголовок секции */}
+                    <div className="mb-6">
+                        <h2 className="text-white font-inter text-[28px] font-bold leading-tight">
                             Каталог аниме
                         </h2>
-                        <p className="text-gray-400 font-inter text-sm sm:text-base mt-2">
+                        <p className="text-gray-400 font-inter text-base mt-2">
                             Откройте для себя лучшие аниме в разных категориях
                         </p>
                     </div>
 
-                    {/* Кнопка обновления */}
-                    <button
-                        onClick={handleRefresh}
-                        disabled={refreshing || loading}
-                        className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2 border border-white/20 disabled:opacity-50 disabled:cursor-not-allowed self-start sm:self-auto"
-                        title="Обновить каталог"
-                    >
-                        <RefreshCw className={`w-4 h-4 text-gray-300 ${refreshing ? 'animate-spin' : ''}`} />
-                        <span className="text-gray-300 text-sm hidden sm:inline">Обновить</span>
-                    </button>
-                </div>
-            </div>
+                    {/* Селектор категорий */}
+                    <CategorySelector onCategoryChange={handleCategoryChange} />
 
-            {/* Селектор категорий */}
-            <CategorySelector onCategoryChange={handleCategoryChange} />
+                    {/* Состояние загрузки */}
+                    {loading && (
+                        <div className="mt-8 w-full min-h-[400px] flex items-center justify-center">
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="animate-spin rounded-full h-12 w-12 border-2 border-[#00f8ff] border-t-transparent"></div>
+                                <span className="text-gray-400">Загрузка аниме...</span>
+                            </div>
+                        </div>
+                    )}
 
-            {/* Состояние загрузки */}
-            {loading && (
-                <div className="mt-8 w-full min-h-[400px] flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00f8ff]"></div>
-                        <span className="text-gray-400">Загрузка аниме...</span>
-                    </div>
-                </div>
-            )}
+                    {/* Состояние ошибки */}
+                    {error && !loading && (
+                        <div className="mt-8 w-full min-h-[400px] flex items-center justify-center">
+                            <div className="flex flex-col items-center gap-4">
+                                <span className="text-red-400">{error}</span>
+                                <button
+                                    onClick={() => fetchAnimeCatalog(currentCategory)}
+                                    className="px-4 py-2 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg hover:opacity-90 transition-opacity"
+                                >
+                                    Попробовать снова
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
-            {/* Состояние ошибки */}
-            {error && !loading && (
-                <div className="mt-8 w-full min-h-[400px] flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-4">
-                        <span className="text-red-400">{error}</span>
-                        <button
-                            onClick={() => fetchAnimeCatalog(currentCategory)}
-                            className="px-4 py-2 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg hover:opacity-90 transition-opacity"
-                        >
-                            Попробовать снова
-                        </button>
-                    </div>
-                </div>
-            )}
+                    {/* Сетка карточек аниме */}
+                    {!loading && !error && (
+                        <div className="mt-8 w-full">
+                            <div className="grid grid-cols-5 gap-6">
+                                {animeList.map((anime) => (
+                                    <AnimeCard
+                                        key={anime.id}
+                                        imageUrl={anime.image_url}
+                                        genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
+                                        episodes={`${anime.episodes} эп.`}
+                                        title={anime.title_ru}
+                                        rating={anime.rating}
+                                        animeId={anime.id}
+                                        variant="desktop"
+                                    />
+                                ))}
+                            </div>
 
-            {/* Сетка карточек аниме */}
-            {!loading && !error && (
-                <div className="mt-8 w-full">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 justify-items-center">
-                        {animeList.map((anime) => (
-                            <AnimeCard
-                                key={anime.id}
-                                imageUrl={anime.image_url}
-                                genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
-                                episodes={`${anime.episodes} эп.`}
-                                title={anime.title_ru}
-                                rating={anime.rating}
-                                animeId={anime.id}
-                            />
-                        ))}
-                    </div>
-                    
-                    {/* Показать сообщение если нет аниме в категории */}
-                    {animeList.length === 0 && (
-                        <div className="w-full py-12 text-center">
-                            <p className="text-gray-400">В этой категории пока нет аниме</p>
+                            {animeList.length === 0 && (
+                                <div className="w-full py-12 text-center">
+                                    <p className="text-gray-400">В этой категории пока нет аниме</p>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
-            )}
-        </div>
+            </div>
+
+            {/* Мобильная версия (до lg) */}
+            <div className="lg:hidden w-full px-4 mt-4 pb-4">
+                {/* Заголовок секции */}
+                <div className="mb-3">
+                    <h2 className="text-white font-inter text-xl font-bold">
+                        Каталог аниме
+                    </h2>
+                    <p className="text-gray-400 font-inter text-xs mt-0.5">
+                        Откройте для себя лучшие аниме
+                    </p>
+                </div>
+
+                {/* Горизонтальная навигация по категориям */}
+                <div className="w-full overflow-x-auto scrollbar-hide mb-4">
+                    <div className="flex flex-row items-center gap-2 pb-2 min-w-max">
+                        {mobileCategories.map((category) => (
+                            <button
+                                key={category.id}
+                                onClick={() => handleCategoryChange(category.id)}
+                                className={`
+                                    flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap
+                                    transition-all duration-300
+                                    ${currentCategory === category.id
+                                        ? 'bg-gradient-to-r from-[#00f8ff] to-[#9932cc] text-white shadow-lg shadow-purple-500/30'
+                                        : 'bg-[#2D2D2E] text-gray-400 hover:text-white hover:bg-[#3D3D3E] border border-white/5'
+                                    }
+                                `}
+                            >
+                                <span className="text-base">{category.icon}</span>
+                                <span className="font-inter text-sm font-medium">
+                                    {category.label}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Состояние загрузки */}
+                {loading && (
+                    <div className="w-full h-48 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-2">
+                            <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#00f8ff] border-t-transparent"></div>
+                            <span className="text-gray-400 text-xs">Загрузка...</span>
+                        </div>
+                    </div>
+                )}
+
+                {/* Состояние ошибки */}
+                {error && !loading && (
+                    <div className="w-full h-48 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-3">
+                            <span className="text-red-400 text-xs text-center">{error}</span>
+                            <button
+                                onClick={() => fetchAnimeCatalog(currentCategory)}
+                                className="px-3 py-1.5 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg text-xs"
+                            >
+                                Попробовать снова
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Горизонтальная прокрутка карточек */}
+                {!loading && !error && (
+                    <div className="w-full overflow-x-auto scrollbar-hide">
+                        <div className="flex flex-row gap-3 pb-2 min-w-max">
+                            {animeList.slice(0, 10).map((anime) => (
+                                <div key={anime.id} className="w-[140px]">
+                                    <AnimeCard
+                                        imageUrl={anime.image_url}
+                                        genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
+                                        episodes={`${anime.episodes} эп.`}
+                                        title={anime.title_ru}
+                                        rating={anime.rating}
+                                        animeId={anime.id}
+                                        variant="mobile"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
 

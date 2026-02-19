@@ -1,4 +1,4 @@
-/* frontend/src/index.css - добавляем */
+/* frontend/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,37 +8,43 @@
     background-color: #121212;
     color: white;
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+  }
+
+  html {
+    height: 100%;
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   * {
     box-sizing: border-box;
   }
 
-  /* Глобально убираем скроллбары */
+  /* Убираем скроллбары везде, но оставляем функциональность */
   * {
     -ms-overflow-style: none;
-    /* IE и Edge */
     scrollbar-width: none;
-    /* Firefox */
   }
 
   *::-webkit-scrollbar {
     display: none;
-    /* Chrome, Safari и Opera */
   }
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 @layer utilities {
 
-  /* Скрытие скроллбара (теперь избыточно, но оставляем) */
+  /* Утилита для скрытия скроллбара */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -48,7 +54,7 @@ html {
     display: none;
   }
 
-  /* Адаптивные анимации */
+  /* Анимация для мобильного меню */
   .animate-slide-in {
     animation: slideIn 0.3s ease-out;
   }
@@ -65,7 +71,7 @@ html {
     }
   }
 
-  /* Улучшенная адаптивная сетка */
+  /* Адаптивная сетка */
   .responsive-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -89,83 +95,59 @@ html {
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     }
   }
+
+  /* Анимации */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 25px rgba(180, 70, 230, 0.7);
+    }
+
+    50% {
+      box-shadow: 0 0 35px rgba(180, 70, 230, 0.9);
+    }
+  }
+
+  /* Анимации для BottomBar */
+  .bottom-bar-enter {
+    transform: translateY(100%);
+  }
+
+  .bottom-bar-enter-active {
+    transform: translateY(0);
+    transition: transform 300ms ease-out;
+  }
+
+  .bottom-bar-exit {
+    transform: translateY(0);
+  }
+
+  .bottom-bar-exit-active {
+    transform: translateY(100%);
+    transition: transform 300ms ease-in;
+  }
 }
 
-/* УБИРАЕМ ВСЕ СТИЛИ ДЛЯ СКРОЛЛБАРА */
-/* Удаляем все ::-webkit-scrollbar правила */
-
-/* Гарантируем, что все изображения адаптивны */
+/* Адаптивные изображения */
 img {
   max-width: 100%;
   height: auto;
 }
 
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 25px rgba(180, 70, 230, 0.7);
-  }
-
-  50% {
-    box-shadow: 0 0 35px rgba(180, 70, 230, 0.9);
-  }
-}
-
-/* Плавные переходы для BottomBar */
-.bottom-bar-enter {
-  transform: translateY(100%);
-}
-
-.bottom-bar-enter-active {
-  transform: translateY(0);
-  transition: transform 300ms ease-out;
-}
-
-.bottom-bar-exit {
-  transform: translateY(0);
-}
-
-.bottom-bar-exit-active {
-  transform: translateY(100%);
-  transition: transform 300ms ease-in;
-}
-
-/* Предотвращение горизонтального скролла на мобильных */
-@media (max-width: 640px) {
-  body {
-    overflow-x: hidden;
-  }
-
-  /* Убираем скроллбары для всех элементов на мобильных */
-  div,
-  section,
-  main,
-  aside {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  div::-webkit-scrollbar,
-  section::-webkit-scrollbar,
-  main::-webkit-scrollbar,
-  aside::-webkit-scrollbar {
-    display: none;
-  }
-}
-
+/* Мобильные safe area */
 .mobile-safe-area {
   padding-top: 4rem;
   padding-bottom: 5rem;
@@ -175,34 +157,5 @@ img {
   .mobile-safe-area {
     padding-top: 0;
     padding-bottom: 0;
-  }
-}
-
-/* Гарантируем, что контент не скрывается под фиксированными элементами */
-@media (max-width: 1024px) {
-  main {
-    min-height: calc(100vh - 8rem);
-  }
-
-  body {
-    overflow: hidden;
-  }
-
-  /* Основная область контента с прокруткой */
-  .lg\:pl-\[300px\]>div:last-child {
-    overflow-y: auto;
-    height: calc(100vh - 70px);
-    margin-top: 70px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .lg\:pl-\[300px\]>div:last-child::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Убираем отступы, которые теперь задаются через Layout */
-  .lg\:pl-\[300px\]>div:last-child>div {
-    padding-top: 0 !important;
   }
 }
