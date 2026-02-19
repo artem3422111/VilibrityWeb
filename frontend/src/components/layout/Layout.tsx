@@ -43,7 +43,7 @@ const Layout: React.FC = () => {
                     </div>
 
                     {/* Контент страницы с правильными отступами */}
-                    <div className="pt-4 lg:pt-[70px] flex-1 overflow-y-auto">
+                    <div className="pt-4 lg:pt-[70px] pb-20 lg:pb-0 flex-1 overflow-y-auto">
                         <div className="p-4 lg:p-6 lg:pb-8">
                             <Outlet />
                         </div>
