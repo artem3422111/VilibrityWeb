@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
+import Footer from './Footer';
 
 const Layout: React.FC = () => {
     useEffect(() => {
@@ -52,6 +53,9 @@ const Layout: React.FC = () => {
 
             {/* BottomBar для мобильных устройств */}
             <BottomBar />
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 };
