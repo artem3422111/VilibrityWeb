@@ -1,10 +1,7 @@
 import React from 'react';
 import HeroSection from '../components/home/HeroSection';
-import StatsSection from '../components/home/StatsSection';
-import TrendingAnimeSection from '../components/home/TrendingAnimeSection';
-import GenresSection from '../components/home/GenresSection';
-import CallToActionSection from '../components/home/CallToActionSection';
 import ContinueWatchingSection from '../components/home/ContinueWatchingSection';
+import AnimeCatalogSection from '../components/home/AnimeCatalogSection';
 
 const Home: React.FC = () => {
     return (
@@ -13,21 +10,10 @@ const Home: React.FC = () => {
             <HeroSection />
 
             {/* Секция "Продолжить просмотр" */}
-            <ContinueWatchingSection />
-            
-            {/* Секция статистики */}
-            <StatsSection />
-            
-            {/* Секция популярных аниме */}
-            <TrendingAnimeSection />
-            
-            {/* Секция жанров */}
-            <GenresSection />
-            
-            {/* Призыв к регистрации */}
-            <CallToActionSection />
-            
-            
+            <ContinueWatchingSection /> 
+
+            {/* Секция каталога аниме */}
+            <AnimeCatalogSection hasPreviousSection={true} />
         </div>
     );
 };
