@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
             <div className="hidden md:block absolute bottom-10 left-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl"></div>
 
             {/* Контент */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-16">
                 {/* Верхняя часть футера */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 mb-16">
 
