@@ -12,24 +12,24 @@ export interface WatchingAnime {
 // Так же можно это вынести этот файл у другую папку и сделать заготовку для апри запроса по пользователь на его список недавно просмотренных
 
 export const watchingData: WatchingAnime[] = [
-    {
-        id: 'dr-stone-final',
-        title: 'Доктор Стоун: Финальная битва',
-        imageUrl: 'https://images.unsplash.com/photo-1531259683059-b1a7b98e147a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
-        currentEpisode: 12,
-        totalEpisodes: 12,
-        watchedPercent: 95,
-        timeRemaining: 5
-    },
-    {
-        id: 'spy-x-family',
-        title: 'Шпионская семья',
-        imageUrl: 'https://images.unsplash.com/photo-1500462918059-b1a7b98e147a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
-        currentEpisode: 8,
-        totalEpisodes: 25,
-        watchedPercent: 32,
-        timeRemaining: 360
-    },
+    // {
+    //     id: 'dr-stone-final',
+    //     title: 'Доктор Стоун: Финальная битва',
+    //     imageUrl: 'https://images.unsplash.com/photo-1531259683059-b1a7b98e147a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+    //     currentEpisode: 12,
+    //     totalEpisodes: 12,
+    //     watchedPercent: 95,
+    //     timeRemaining: 5
+    // },
+    // {
+    //     id: 'spy-x-family',
+    //     title: 'Шпионская семья',
+    //     imageUrl: 'https://images.unsplash.com/photo-1500462918059-b1a7b98e147a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
+    //     currentEpisode: 8,
+    //     totalEpisodes: 25,
+    //     watchedPercent: 32,
+    //     timeRemaining: 360
+    // },
     // {
     //     id: 'demon-slayer',
     //     title: 'Демон слэйер: Клинок рассекающий демонов',

@@ -1,207 +1,141 @@
 // frontend/src/components/home/AnimeCatalogSection.tsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import CategorySelector from './CategorySelector';
 import AnimeCard from './AnimeCard';
+import { ChevronRight } from 'lucide-react';
+import { getTrendingAnime, getPopularAnime, getAnimeByGenre, Anime } from '../../utils/api';
 
-interface AnimeItem {
+interface CategoryData {
     id: string;
-    title_ru: string;
-    title_en: string;
-    title_jp?: string;
+    label: string;
+    icon: string;
     description: string;
-    description_short?: string;
-    genres: string[];
-    rating: number;
-    year: number;
-    episodes: number;
-    episode_duration?: number;
-    status?: string;
-    image_url: string;
-    banner_url?: string;
-    cover_color?: string;
-    popularity: number;
-    favourites?: number;
-    average_score?: number;
-    is_recommended: boolean;
-    is_trending: boolean;
-    is_popular: boolean;
-    is_new: boolean;
-    studio?: string;
-    format?: string;
-    season?: string;
-    season_year?: number;
-    views_count: number;
-    watch_count?: number;
-    external_links?: Array<{ url: string, site: string }>;
-    trailer_url?: string;
-    external_id?: number;
-    source?: string;
+    link: string;
+    apiFunction: (page?: number, limit?: number) => Promise<any>;
 }
 
 const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPreviousSection = true }) => {
-    const [animeList, setAnimeList] = useState<AnimeItem[]>([]);
+    const [animeList, setAnimeList] = useState<Anime[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [currentCategory, setCurrentCategory] = useState<string>('all');
 
-    // Категории для мобильной навигации
-    const mobileCategories = [
-        { id: 'all', label: 'Все', icon: '📺' },
-        { id: 'trending', label: 'В тренде', icon: '🔥' },
-        { id: 'new', label: 'Новинки', icon: '🆕' },
-        { id: 'popular', label: 'Популярное', icon: '⭐' },
-        { id: 'action', label: 'Экшен', icon: '⚔️' },
-        { id: 'romance', label: 'Романтика', icon: '❤️' },
+    // Данные для каждой категории с привязанной API функцией
+    const mobileCategories: CategoryData[] = [
+        {
+            id: 'trending',
+            label: 'В тренде',
+            icon: '🔥',
+            description: 'Самые обсуждаемые сейчас',
+            link: '/category/trending',
+            apiFunction: (page = 1) => getTrendingAnime(page, 10)
+        },
+        {
+            id: 'popular',
+            label: 'Популярное',
+            icon: '⭐',
+            description: 'Лучшее по версии зрителей',
+            link: '/category/popular',
+            apiFunction: (page = 1) => getPopularAnime(page, 10)
+        },
+        {
+            id: 'action',
+            label: 'Экшен',
+            icon: '⚔️',
+            description: 'Динамичные боевики',
+            link: '/category/action',
+            apiFunction: (page = 1) => getAnimeByGenre('Action', page, 10)
+        },
+        {
+            id: 'romance',
+            label: 'Романтика',
+            icon: '❤️',
+            description: 'Истории о любви',
+            link: '/category/romance',
+            apiFunction: (page = 1) => getAnimeByGenre('Romance', page, 10)
+        },
+        {
+            id: 'comedy',
+            label: 'Комедия',
+            icon: '😄',
+            description: 'Поднимут настроение',
+            link: '/category/comedy',
+            apiFunction: (page = 1) => getAnimeByGenre('Comedy', page, 10)
+        },
+        {
+            id: 'drama',
+            label: 'Драма',
+            icon: '🎭',
+            description: 'Глубокие эмоциональные истории',
+            link: '/category/drama',
+            apiFunction: (page = 1) => getAnimeByGenre('Drama', page, 10)
+        },
     ];
 
-    // Статические данные для демонстрации
-    const staticAnime: AnimeItem[] = [
-        {
-            id: 'dr-stone-final',
-            title_ru: 'Доктор Стоун: Финальная битва',
-            title_en: 'Dr. Stone: Final Battle',
-            description: 'Эпический финал легендарного аниме. Сенку и его друзья вступают в последнюю битву за судьбу человечества.',
-            genres: ['Научная фантастика', 'Экшен', 'Приключения'],
-            rating: 8.7,
-            year: 2024,
-            episodes: 24,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx21519-SUo3ZQuCbYhJ.png',
-            banner_url: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-            popularity: 100,
-            is_recommended: true,
-            is_trending: true,
-            is_popular: true,
-            is_new: true,
-            views_count: 1500000,
-            source: 'Static Data'
-        },
-        {
-            id: 'attack-on-titan',
-            title_ru: 'Атака титанов',
-            title_en: 'Attack on Titan',
-            description: 'Столетия назад человечество было почти уничтожено титанами.',
-            genres: ['Экшен', 'Драма', 'Фэнтези'],
-            rating: 8.5,
-            year: 2013,
-            episodes: 75,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-buvcRTBx4NSm.jpg',
-            banner_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/16498-8jpFCOcDmneX.jpg',
-            popularity: 50,
-            is_recommended: true,
-            is_trending: false,
-            is_popular: true,
-            is_new: false,
-            views_count: 2500000,
-            source: 'Static Data'
-        },
-        {
-            id: 'demon-slayer',
-            title_ru: 'Клинок, рассекающий демонов',
-            title_en: 'Demon Slayer',
-            description: 'Тандзиро Камадо становится истребителем демонов.',
-            genres: ['Экшен', 'Фэнтези', 'Историческое'],
-            rating: 8.6,
-            year: 2019,
-            episodes: 55,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20605-rC8LjFXyMxtx.jpg',
-            banner_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/20605-B8FfLLcSC3Ab.jpg',
-            popularity: 30,
-            is_recommended: true,
-            is_trending: true,
-            is_popular: true,
-            is_new: false,
-            views_count: 1800000,
-            source: 'Static Data'
-        },
-        {
-            id: 'my-hero-academia',
-            title_ru: 'Моя геройская академия',
-            title_en: 'My Hero Academia',
-            description: 'В мире, где у большинства людей есть сверхспособности.',
-            genres: ['Экшен', 'Комедия', 'Школа'],
-            rating: 8.0,
-            year: 2016,
-            episodes: 138,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx21459-2pVGDKXMttXq.jpg',
-            banner_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/21459-f5QYIqFq1QXA.jpg',
-            popularity: 80,
-            is_recommended: true,
-            is_trending: false,
-            is_popular: true,
-            is_new: false,
-            views_count: 1200000,
-            source: 'Static Data'
-        },
-        {
-            id: 'one-piece',
-            title_ru: 'Ван Пис',
-            title_en: 'One Piece',
-            description: 'Монки Д. Луффи и его команда пиратов ищут сокровище.',
-            genres: ['Экшен', 'Приключения', 'Комедия'],
-            rating: 8.7,
-            year: 1999,
-            episodes: 1100,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx21-1OquNNCyoWUV.jpg',
-            banner_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg',
-            popularity: 10,
-            is_recommended: true,
-            is_trending: false,
-            is_popular: true,
-            is_new: false,
-            views_count: 5000000,
-            source: 'Static Data'
-        },
-        {
-            id: 'jujutsu-kaisen',
-            title_ru: 'Магическая битва',
-            title_en: 'Jujutsu Kaisen',
-            description: 'Юдзи Итадори становится сосудом для могущественного проклятия.',
-            genres: ['Экшен', 'Сверхъестественное'],
-            rating: 8.8,
-            year: 2020,
-            episodes: 47,
-            image_url: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113415-HlcCk7G7cPcE.jpg',
-            popularity: 20,
-            is_recommended: true,
-            is_trending: true,
-            is_popular: true,
-            is_new: false,
-            views_count: 3200000,
-            source: 'Static Data'
-        }
-    ];
+    // Состояния для хранения данных каждой категории
+    const [categoryData, setCategoryData] = useState<Record<string, Anime[]>>({});
+    const [categoryLoading, setCategoryLoading] = useState<Record<string, boolean>>({});
 
+    // Загрузка данных для всех категорий
+    useEffect(() => {
+        const fetchAllCategories = async () => {
+            const newData: Record<string, Anime[]> = {};
+            const newLoading: Record<string, boolean> = {};
+
+            for (const category of mobileCategories) {
+                newLoading[category.id] = true;
+                setCategoryLoading(prev => ({ ...prev, [category.id]: true }));
+
+                try {
+                    const result = await category.apiFunction(1, 10);
+                    if (!result.error && result.data) {
+                        newData[category.id] = result.data;
+                    } else {
+                        newData[category.id] = [];
+                    }
+                } catch (err) {
+                    console.error(`Error fetching ${category.id}:`, err);
+                    newData[category.id] = [];
+                }
+
+                newLoading[category.id] = false;
+                setCategoryLoading(prev => ({ ...prev, [category.id]: false }));
+            }
+
+            setCategoryData(newData);
+        };
+
+        fetchAllCategories();
+    }, []);
+
+    // Загрузка данных для десктопного каталога
     const fetchAnimeCatalog = async (category: string = 'all') => {
         try {
             setLoading(true);
             setError(null);
 
-            // Имитация загрузки с сервера
-            await new Promise(resolve => setTimeout(resolve, 500));
-
-            // Фильтрация данных по категории
-            let filteredAnime = [...staticAnime];
-
+            let result;
             switch (category) {
                 case 'trending':
-                    filteredAnime = filteredAnime.filter(a => a.is_trending);
-                    break;
-                case 'new':
-                    filteredAnime = filteredAnime.filter(a => a.is_new);
+                    result = await getTrendingAnime(1, 30);
                     break;
                 case 'popular':
-                    filteredAnime = filteredAnime.filter(a => a.is_popular);
+                    result = await getPopularAnime(1, 30);
                     break;
                 default:
-                    // Все аниме
+                    result = await getTrendingAnime(1, 30);
                     break;
             }
 
-            setAnimeList(filteredAnime);
+            if (result.error || !result.data) {
+                throw new Error(result.error || 'Failed to fetch anime');
+            }
+
+            setAnimeList(result.data);
         } catch (err) {
-            console.error('Ошибка при загрузке каталога:', err);
+            console.error('Error fetching anime catalog:', err);
             setError('Не удалось загрузить каталог аниме');
-            setAnimeList(staticAnime);
         } finally {
             setLoading(false);
         }
@@ -263,15 +197,15 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
                     {!loading && !error && (
                         <div className="mt-8 w-full">
                             <div className="grid grid-cols-5 gap-6">
-                                {animeList.map((anime) => (
+                                {animeList.slice(0, 30).map((anime) => (
                                     <AnimeCard
                                         key={anime.id}
-                                        imageUrl={anime.image_url}
+                                        imageUrl={anime.coverImage.large}
                                         genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
                                         episodes={`${anime.episodes} эп.`}
                                         title={anime.title_ru}
-                                        rating={anime.rating}
-                                        animeId={anime.id}
+                                        rating={convertRating(anime.meanScore || 0)}
+                                        animeId={anime.id.toString()}
                                         variant="desktop"
                                     />
                                 ))}
@@ -288,90 +222,84 @@ const AnimeCatalogSection: React.FC<{ hasPreviousSection?: boolean }> = ({ hasPr
             </div>
 
             {/* Мобильная версия (до lg) */}
-            <div className="lg:hidden w-full px-4 mt-4 pb-4">
+            <div className="lg:hidden w-full px-4 mt-4 pb-8">
                 {/* Заголовок секции */}
-                <div className="mb-3">
-                    <h2 className="text-white font-inter text-xl font-bold">
-                        Каталог аниме
+                <div className="mb-6">
+                    <h2 className="text-white font-inter text-2xl font-bold">
+                        Исследуйте аниме
                     </h2>
-                    <p className="text-gray-400 font-inter text-xs mt-0.5">
-                        Откройте для себя лучшие аниме
+                    <p className="text-gray-400 font-inter text-sm mt-1">
+                        Выберите категорию и найдите что-то новое
                     </p>
                 </div>
 
-                {/* Горизонтальная навигация по категориям */}
-                <div className="w-full overflow-x-auto scrollbar-hide mb-4">
-                    <div className="flex flex-row items-center gap-2 pb-2 min-w-max">
-                        {mobileCategories.map((category) => (
-                            <button
-                                key={category.id}
-                                onClick={() => handleCategoryChange(category.id)}
-                                className={`
-                                    flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap
-                                    transition-all duration-300
-                                    ${currentCategory === category.id
-                                        ? 'bg-gradient-to-r from-[#00f8ff] to-[#9932cc] text-white shadow-lg shadow-purple-500/30'
-                                        : 'bg-[#2D2D2E] text-gray-400 hover:text-white hover:bg-[#3D3D3E] border border-white/5'
-                                    }
-                                `}
-                            >
-                                <span className="text-base">{category.icon}</span>
-                                <span className="font-inter text-sm font-medium">
-                                    {category.label}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                {/* Категории с карточками */}
+                <div className="space-y-8">
+                    {mobileCategories.map((category) => {
+                        const categoryAnime = categoryData[category.id] || [];
+                        const isLoading = categoryLoading[category.id];
 
-                {/* Состояние загрузки */}
-                {loading && (
-                    <div className="w-full h-48 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-2">
-                            <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#00f8ff] border-t-transparent"></div>
-                            <span className="text-gray-400 text-xs">Загрузка...</span>
-                        </div>
-                    </div>
-                )}
+                        return (
+                            <div key={category.id} className="space-y-3">
+                                {/* Заголовок категории с кнопкой "Всё" */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-2xl">{category.icon}</span>
+                                        <div>
+                                            <h3 className="text-white font-inter text-lg font-bold">
+                                                {category.label}
+                                            </h3>
+                                            <p className="text-gray-500 font-inter text-xs">
+                                                {category.description}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                {/* Состояние ошибки */}
-                {error && !loading && (
-                    <div className="w-full h-48 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-3">
-                            <span className="text-red-400 text-xs text-center">{error}</span>
-                            <button
-                                onClick={() => fetchAnimeCatalog(currentCategory)}
-                                className="px-3 py-1.5 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg text-xs"
-                            >
-                                Попробовать снова
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* Горизонтальная прокрутка карточек */}
-                {!loading && !error && (
-                    <div className="w-full overflow-x-auto scrollbar-hide">
-                        <div className="flex flex-row gap-3 pb-2 min-w-max">
-                            {animeList.slice(0, 10).map((anime) => (
-                                <div key={anime.id} className="w-[140px]">
-                                    <AnimeCard
-                                        imageUrl={anime.image_url}
-                                        genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
-                                        episodes={`${anime.episodes} эп.`}
-                                        title={anime.title_ru}
-                                        rating={anime.rating}
-                                        animeId={anime.id}
-                                        variant="mobile"
-                                    />
+                                    <Link
+                                        to={category.link}
+                                        className="flex items-center gap-1 px-3 py-1.5 bg-[#2D2D2E] rounded-full border border-white/5"
+                                    >
+                                        <span className="text-gray-300 font-inter text-xs">Всё</span>
+                                        <ChevronRight className="w-3 h-3 text-gray-400" />
+                                    </Link>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
+
+                                {/* Горизонтальная прокрутка карточек категории */}
+                                {isLoading ? (
+                                    <div className="w-full h-[200px] flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#00f8ff] border-t-transparent"></div>
+                                    </div>
+                                ) : (
+                                    <div className="w-full overflow-x-auto scrollbar-hide">
+                                        <div className="flex flex-row gap-3 pb-2 min-w-max">
+                                            {categoryAnime.map((anime) => (
+                                                <div key={anime.id} className="w-[130px]">
+                                                    <AnimeCard
+                                                        imageUrl={anime.coverImage.medium || anime.coverImage.large}
+                                                        genre={anime.genres?.length > 0 ? anime.genres[0] : 'Аниме'}
+                                                        episodes={`${anime.episodes} эп.`}
+                                                        title={anime.title_ru}
+                                                        rating={convertRating(anime.meanScore || 0)}
+                                                        animeId={anime.id.toString()}
+                                                        variant="mobile"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </>
     );
+};
+
+// Вспомогательная функция для конвертации рейтинга
+const convertRating = (score: number): number => {
+    return Math.round((score / 100) * 5 * 10) / 10;
 };
 
 export default AnimeCatalogSection;
