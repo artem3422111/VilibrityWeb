@@ -63,8 +63,7 @@ async def api_info():
         "title": settings.APP_NAME,
         "version": settings.APP_VERSION,
         "docs_url": "/docs",
-        "redoc_url": "/redoc",
-        "openapi_schema": "/openapi.json"
+        "redoc_url": "/redoc"
     }
 
 

@@ -6,8 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    port: 5173,
-    allowedHosts: ["vilibrityweb-1.onrender.com"]
+    port: 5173
   },
   resolve: {
     alias: {

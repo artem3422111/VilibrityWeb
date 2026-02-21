@@ -1,100 +1,30 @@
+// frontend/src/components/home/HeroSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Play, Info } from 'lucide-react';
-import { getBanner } from '../../utils/api'; // Импортируем API функции
-
-interface Anime {
-    id: string;
-    title_ru: string;
-    title_en: string;
-    description: string;
-    image_url: string;
-    banner_url: string;
-    rating: number;
-    year: number;
-    genres: string[];
-    is_recommended: boolean;
-    is_popular: boolean;
-    is_trending: boolean;
-    is_new: boolean;
-    views_count: number;
-    status?: string;
-}
+import { Link } from 'react-router-dom';
+import { getBanner, Anime } from '../../utils/api';
 
 const HeroSection: React.FC = () => {
     const [anime, setAnime] = useState<Anime | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchBannerData = async (force = false) => {
-        try {
-            if (!force) {
-                setLoading(true);
-            }
-            setError(null);
-
-            // Получаем данные с бэкенда
-            const response = await getBanner();
-
-            if (response.error) {
-                throw new Error(response.error);
-            }
-
-            if (response.data) {
-                setAnime(response.data);
-            } else {
-                throw new Error('No data received from server');
-            }
-
-        } catch (err) {
-            console.error('Ошибка при загрузке баннера:', err);
-            setError(err instanceof Error ? err.message : 'Не удалось загрузить данные баннера');
-
-            // Резервные данные на случай ошибки
-            const fallbackData: Anime = {
-                id: 'dr-stone-final',
-                title_ru: 'Доктор Стоун: Финальная битва',
-                title_en: 'Dr. Stone: Final Battle',
-                description: 'Эпический финал легендарного аниме. Сенку и его друзья вступают в последнюю битву за судьбу человечества. После того как мир был загадочным образом превращён в камень, человечество находится на грани исчезновения. Гениальный учёный Сенку Ишигами возрождает цивилизацию с помощью науки, но теперь ему предстоит столкнуться с сильным противником.',
-                image_url: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1520&q=80',
-                banner_url: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-                rating: 8.7,
-                year: 2024,
-                genres: ['Научная фантастика', 'Экшен', 'Приключения', 'Драма'],
-                is_recommended: true,
-                is_popular: true,
-                is_trending: true,
-                is_new: true,
-                views_count: 1500000,
-                status: 'Вышел',
-            };
-
-            setAnime(fallbackData);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchBannerData(false);
+        const fetchBanner = async () => {
+            const result = await getBanner();
+
+            if (result.error || !result.data) {
+                setError(result.error || 'Failed to load banner');
+                setLoading(false);
+                return;
+            }
+
+            setAnime(result.data);
+            setLoading(false);
+        };
+
+        fetchBanner();
     }, []);
-
-    const handleWatchNow = () => {
-        if (anime) {
-            console.log('Watch now:', anime.id);
-            // TODO: Добавить навигацию к аниме
-            alert(`Начать просмотр: ${anime.title_ru}`);
-        }
-    };
-
-    const handleMoreInfo = () => {
-        if (anime) {
-            console.log('More info:', anime.id);
-            // TODO: Добавить навигацию к детальной странице
-            alert(`Подробнее об: ${anime.title_ru}\nГод: ${anime.year}\nРейтинг: ${anime.rating}\nЖанры: ${anime.genres?.join(', ')}`);
-        }
-    };
-
-    const isNewRelease = anime?.year === new Date().getFullYear();
 
     const getMainGenres = () => {
         if (!anime?.genres) return [];
@@ -110,25 +40,27 @@ const HeroSection: React.FC = () => {
         return views.toString();
     };
 
-    if (loading && !anime) {
+    const isNewRelease = anime?.is_new;
+
+    if (loading) {
         return (
             <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
                 <div className="flex flex-col items-center gap-4">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00f8ff]"></div>
                     <span className="text-gray-400">Загрузка баннера...</span>
                 </div>
             </div>
         );
     }
 
-    if (error && !anime) {
+    if (error || !anime) {
         return (
             <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
-                <div className="flex flex-col items-center gap-4 p-4">
-                    <span className="text-red-400 text-center">Ошибка: {error}</span>
+                <div className="flex flex-col items-center gap-4">
+                    <span className="text-red-400 text-sm">Не удалось загрузить баннер</span>
                     <button
-                        onClick={() => fetchBannerData(true)}
-                        className="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors"
+                        onClick={() => window.location.reload()}
+                        className="px-4 py-2 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg text-sm hover:opacity-90 transition-opacity"
                     >
                         Попробовать снова
                     </button>
@@ -143,10 +75,7 @@ const HeroSection: React.FC = () => {
             <div
                 className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                 style={{
-                    backgroundImage: `url("${anime?.banner_url || anime?.image_url}")`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundImage: `url("${anime.bannerImage || anime.coverImage.large}")`,
                 }}
             />
 
@@ -158,23 +87,22 @@ const HeroSection: React.FC = () => {
             <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-6 lg:p-8">
                 {/* Теги и информация */}
                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                    {/* Тег "Рекомендуем" */}
-                    {anime?.is_recommended && (
-                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-purple-600 to-purple-800 border border-purple-700">
+                    {anime.is_recommended && (
+                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-[#00f8ff] to-[#9932cc]">
                             <span className="text-white text-xs md:text-sm font-semibold">
                                 Рекомендуем
                             </span>
                         </div>
                     )}
 
-                    {/* Тег "Новинка" или Год */}
-                    <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600 to-blue-800 border border-blue-700">
-                        <span className="text-white text-xs md:text-sm font-semibold">
-                            {isNewRelease ? 'Новинка' : anime?.year}
-                        </span>
-                    </div>
+                    {isNewRelease && (
+                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600 to-blue-800">
+                            <span className="text-white text-xs md:text-sm font-semibold">
+                                Новинка
+                            </span>
+                        </div>
+                    )}
 
-                    {/* Теги жанров */}
                     {getMainGenres().map((genre, index) => (
                         <div
                             key={index}
@@ -186,22 +114,20 @@ const HeroSection: React.FC = () => {
                         </div>
                     ))}
 
-                    {/* Рейтинг */}
-                    {anime?.rating && (
+                    {anime.meanScore && (
                         <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-yellow-900/50 backdrop-blur-sm">
                             <span className="text-yellow-400 text-sm">★</span>
                             <span className="text-white font-semibold text-sm">
-                                {anime.rating.toFixed(1)}
+                                {convertRating(anime.meanScore).toFixed(1)}
                             </span>
                         </div>
                     )}
 
-                    {/* Просмотры */}
-                    {anime?.views_count && (
+                    {anime.popularity > 0 && (
                         <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-gray-800/50 backdrop-blur-sm">
                             <span className="text-gray-400 text-xs">👁️</span>
                             <span className="text-gray-300 text-xs md:text-sm">
-                                {formatViews(anime.views_count)}
+                                {formatViews(anime.popularity)}
                             </span>
                         </div>
                     )}
@@ -210,40 +136,43 @@ const HeroSection: React.FC = () => {
                 {/* Название и описание */}
                 <div className="mb-6 max-w-2xl">
                     <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4 drop-shadow-lg">
-                        {anime?.title_ru || 'Название аниме'}
+                        {anime.title_ru}
                     </h2>
                     <p className="text-gray-200 text-sm md:text-base lg:text-lg line-clamp-2 md:line-clamp-3">
-                        {anime?.description || 'Описание отсутствует'}
+                        {anime.description?.replace(/<[^>]*>/g, '') || 'Описание отсутствует'}
                     </p>
                 </div>
 
                 {/* Кнопки */}
                 <div className="flex flex-wrap gap-3">
-                    {/* Кнопка "Смотреть сейчас" */}
-                    <button
-                        onClick={handleWatchNow}
-                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 rounded-[10px] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-purple-900/30"
+                    <Link
+                        to={`/anime/${anime.id}`}
+                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] hover:opacity-90 rounded-[10px] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-purple-900/30"
                     >
                         <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
                         <span className="text-white font-semibold text-sm md:text-base">
                             Смотреть сейчас
                         </span>
-                    </button>
+                    </Link>
 
-                    {/* Кнопка "Подробнее" */}
-                    <button
-                        onClick={handleMoreInfo}
+                    <Link
+                        to={`/anime/${anime.id}`}
                         className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gray-800/70 hover:bg-gray-700/70 rounded-[10px] backdrop-blur-sm border border-gray-700 transition-all duration-300 hover:scale-105 active:scale-95"
                     >
                         <Info className="w-4 h-4 md:w-5 md:h-5 text-white" />
                         <span className="text-white font-semibold text-sm md:text-base">
                             Подробнее
                         </span>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
     );
+};
+
+// Вспомогательная функция для конвертации рейтинга
+const convertRating = (score: number): number => {
+    return Math.round((score / 100) * 5 * 10) / 10;
 };
 
 export default HeroSection;

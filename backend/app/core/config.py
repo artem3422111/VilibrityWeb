@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     
     # CORS - Accept as string and convert to list
-    CORS_ORIGINS: str = "https://vilibrityweb-1.onrender.com,http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000"
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000"
     
     # AniList API
     ANILIST_API_URL: str = "https://graphql.anilist.co"

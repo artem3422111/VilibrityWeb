@@ -15,7 +15,7 @@ class CoverImage(BaseModel):
 
 
 class BannerAnime(BaseModel):
-    """Anime data for home banner"""
+    """Anime data for home banner and catalog"""
     id: int
     title: str = Field(..., alias="title")
     description: Optional[str] = None
@@ -27,6 +27,10 @@ class BannerAnime(BaseModel):
     episodes: Optional[int] = None
     genres: Optional[List[str]] = []
     startDate: Optional[str] = None
+    season: Optional[str] = None
+    seasonYear: Optional[int] = None
+    format: Optional[str] = None
+    studio: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -39,13 +43,15 @@ class BannerResponse(BaseModel):
     updated_at: datetime
 
 
-class AnimeListItem(BaseModel):
+class AnimeCatalogItem(BaseModel):
     """Single anime item for lists"""
     id: int
     title: str
     coverImage: CoverImage
     status: Optional[str] = None
     episodes: Optional[int] = None
+    genres: Optional[List[str]] = []
+    meanScore: Optional[int] = None
 
     class Config:
         from_attributes = True
