@@ -104,12 +104,21 @@ const AnimeCard: React.FC<AnimeCardProps> = ({
                     } z-10`}>
                     <button
                         onClick={handleWatchClick}
-                        className="w-[140px] h-12 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
+                        className="w-[140px] h-12 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 relative"
                         style={{
-                            background: 'linear-gradient(135deg, #00f8ff, #9932cc)',
-                            boxShadow: '0 4px 20px rgba(153, 50, 204, 0.4)',
+                            background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                            boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                         }}
                     >
+                        {/* Свечение для кнопки */}
+                        <div
+                            className="absolute inset-0 rounded-xl opacity-60"
+                            style={{
+                                background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                filter: 'blur(8px)',
+                                zIndex: -1
+                            }}
+                        />
                         <Play className="w-4 h-4 text-white" />
                         <span className="text-white font-inter text-sm font-semibold">
                             Смотреть

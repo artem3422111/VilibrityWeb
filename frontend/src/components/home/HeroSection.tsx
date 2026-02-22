@@ -60,9 +60,21 @@ const HeroSection: React.FC = () => {
                     <span className="text-red-400 text-sm">Не удалось загрузить баннер</span>
                     <button
                         onClick={() => window.location.reload()}
-                        className="px-4 py-2 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] rounded-lg text-sm hover:opacity-90 transition-opacity"
+                        className="px-4 py-2 rounded-lg text-sm hover:opacity-90 transition-opacity relative"
+                        style={{
+                            background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                            boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                        }}
                     >
-                        Попробовать снова
+                        <div
+                            className="absolute inset-0 rounded-lg opacity-60"
+                            style={{
+                                background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                filter: 'blur(8px)',
+                                zIndex: -1
+                            }}
+                        />
+                        <span className="text-white">Попробовать снова</span>
                     </button>
                 </div>
             </div>
@@ -88,7 +100,7 @@ const HeroSection: React.FC = () => {
                 {/* Теги и информация */}
                 <div className="flex flex-wrap items-center gap-2 mb-4">
                     {anime.is_recommended && (
-                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-[#00f8ff] to-[#9932cc]">
+                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-purple-600/90 to-pink-600/90 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-600/20">
                             <span className="text-white text-xs md:text-sm font-semibold">
                                 Рекомендуем
                             </span>
@@ -96,7 +108,7 @@ const HeroSection: React.FC = () => {
                     )}
 
                     {isNewRelease && (
-                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600 to-blue-800">
+                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600/90 to-cyan-600/90 backdrop-blur-sm border border-blue-400/30 shadow-lg shadow-blue-600/20">
                             <span className="text-white text-xs md:text-sm font-semibold">
                                 Новинка
                             </span>
@@ -106,7 +118,7 @@ const HeroSection: React.FC = () => {
                     {getMainGenres().map((genre, index) => (
                         <div
                             key={index}
-                            className="px-3 py-1 rounded-[10px] bg-gray-800/70 backdrop-blur-sm border border-gray-700"
+                            className="px-3 py-1 rounded-[10px] bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:bg-gray-700/80 transition-colors"
                         >
                             <span className="text-gray-200 text-xs font-medium">
                                 {genre}
@@ -115,7 +127,7 @@ const HeroSection: React.FC = () => {
                     ))}
 
                     {anime.meanScore && (
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-yellow-900/50 backdrop-blur-sm">
+                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-yellow-600/20 backdrop-blur-sm border border-yellow-500/30">
                             <span className="text-yellow-400 text-sm">★</span>
                             <span className="text-white font-semibold text-sm">
                                 {convertRating(anime.meanScore).toFixed(1)}
@@ -124,7 +136,7 @@ const HeroSection: React.FC = () => {
                     )}
 
                     {anime.popularity > 0 && (
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-gray-800/50 backdrop-blur-sm">
+                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-gray-800/60 backdrop-blur-sm border border-gray-700">
                             <span className="text-gray-400 text-xs">👁️</span>
                             <span className="text-gray-300 text-xs md:text-sm">
                                 {formatViews(anime.popularity)}
@@ -147,8 +159,21 @@ const HeroSection: React.FC = () => {
                 <div className="flex flex-wrap gap-3">
                     <Link
                         to={`/anime/${anime.id}`}
-                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-[#00f8ff] to-[#9932cc] hover:opacity-90 rounded-[10px] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-purple-900/30"
+                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-[10px] transition-all duration-200 hover:scale-105 active:scale-95 relative"
+                        style={{
+                            background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                            boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                        }}
                     >
+                        {/* Свечение для кнопки */}
+                        <div
+                            className="absolute inset-0 rounded-[10px] opacity-60"
+                            style={{
+                                background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                filter: 'blur(8px)',
+                                zIndex: -1
+                            }}
+                        />
                         <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
                         <span className="text-white font-semibold text-sm md:text-base">
                             Смотреть сейчас
@@ -157,7 +182,7 @@ const HeroSection: React.FC = () => {
 
                     <Link
                         to={`/anime/${anime.id}`}
-                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gray-800/70 hover:bg-gray-700/70 rounded-[10px] backdrop-blur-sm border border-gray-700 transition-all duration-300 hover:scale-105 active:scale-95"
+                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gray-800/70 hover:bg-[#641f86] rounded-[10px] backdrop-blur-sm border border-gray-700 transition-all duration-200 hover:scale-105 active:scale-95"
                     >
                         <Info className="w-4 h-4 md:w-5 md:h-5 text-white" />
                         <span className="text-white font-semibold text-sm md:text-base">

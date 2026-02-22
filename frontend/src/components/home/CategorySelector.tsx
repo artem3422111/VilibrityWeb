@@ -40,36 +40,45 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ onCategoryChange })
                             className={`
                                 flex-1 h-10 sm:h-11 md:h-12 px-2 sm:px-3 md:px-4
                                 rounded-xl sm:rounded-2xl
-                                transition-all duration-300 
+                                transition-all duration-200 
                                 flex items-center justify-center gap-1.5 sm:gap-2
-                                relative overflow-hidden group
-                                ${isActive
-                                    ? 'bg-gradient-to-r from-[#00f8ff] to-[#9932cc] text-white shadow-lg shadow-purple-500/30'
-                                    : 'text-gray-400 hover:text-white hover:bg-white/10'
+                                relative
+                                ${isActive 
+                                    ? '' // Стили применяются через inline style
+                                    : 'bg-transparent hover:bg-[#641f86] text-gray-400 hover:text-white'
                                 }
                             `}
+                            style={isActive ? {
+                                background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                                boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                                color: 'white'
+                            } : {}}
                         >
-                            {/* Эффект свечения при наведении */}
-                            {!isActive && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-x-full group-hover:translate-x-full" />
+                            {/* Свечение для выбранной кнопки */}
+                            {isActive && (
+                                <div
+                                    className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-60"
+                                    style={{
+                                        background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                        filter: 'blur(8px)',
+                                        zIndex: -1
+                                    }}
+                                />
                             )}
 
                             {/* Иконка */}
-                            <span className="text-base sm:text-lg md:text-xl">{category.icon}</span>
+                            <span className={`text-base sm:text-lg md:text-xl ${isActive ? 'text-white' : 'text-gray-400'}`}>
+                                {category.icon}
+                            </span>
 
                             {/* Текст с адаптивным размером */}
                             <span className={`
                                 font-inter font-medium text-center whitespace-nowrap
                                 text-xs sm:text-sm md:text-base lg:text-lg
-                                ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}
+                                ${isActive ? 'text-white' : 'text-gray-400'}
                             `}>
                                 {category.label}
                             </span>
-
-                            {/* Активный индикатор */}
-                            {isActive && (
-                                <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-5 h-1 bg-white rounded-full" />
-                            )}
                         </button>
                     );
                 })}

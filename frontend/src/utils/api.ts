@@ -44,10 +44,10 @@ export interface ApiResponse<T> {
 }
 
 // Преобразование рейтинга из 100-балльной системы в 5-балльную
-const convertRating = (score: number | undefined): number => {
-    if (!score) return 0;
-    return Math.round((score / 100) * 5 * 10) / 10;
-};
+// const convertRating = (score: number | undefined): number => {
+//     if (!score) return 0;
+//     return Math.round((score / 100) * 5 * 10) / 10;
+// };
 
 // Определяем новизну аниме (текущий или прошлый год)
 const isNewAnime = (startDate?: string): boolean => {
@@ -125,7 +125,7 @@ async function fetchApi<T>(
 
 // Получение баннера (трендовое аниме)
 export async function getBanner(): Promise<ApiResponse<Anime>> {
-    const result = await fetchApi<BannerResponse>('/anime/trending?page=1&limit=10');
+    const result = await fetchApi<BannerResponse>('/anime/trending?page=1&limit=2');
 
     if (result.error || !result.data) {
         return {
