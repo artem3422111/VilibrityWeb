@@ -42,7 +42,7 @@ dist-ssr/
 *.swp
 *.swo
 *~
-
+VilibrityWeb_backup/
 # OS
 .DS_Store
 .DS_Store?

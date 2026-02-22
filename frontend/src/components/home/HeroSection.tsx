@@ -44,10 +44,12 @@ const HeroSection: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00f8ff]"></div>
-                    <span className="text-gray-400">Загрузка баннера...</span>
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+                <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00f8ff]"></div>
+                        <span className="text-gray-400">Загрузка баннера...</span>
+                    </div>
                 </div>
             </div>
         );
@@ -55,140 +57,144 @@ const HeroSection: React.FC = () => {
 
     if (error || !anime) {
         return (
-            <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
-                <div className="flex flex-col items-center gap-4">
-                    <span className="text-red-400 text-sm">Не удалось загрузить баннер</span>
-                    <button
-                        onClick={() => window.location.reload()}
-                        className="px-4 py-2 rounded-lg text-sm hover:opacity-90 transition-opacity relative"
-                        style={{
-                            background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
-                            boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                        }}
-                    >
-                        <div
-                            className="absolute inset-0 rounded-lg opacity-60"
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+                <div className="w-full h-[450px] md:h-[500px] lg:h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-r from-[#212121] to-[#2a2a2a]">
+                    <div className="flex flex-col items-center gap-4">
+                        <span className="text-red-400 text-sm">Не удалось загрузить баннер</span>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="px-4 py-2 rounded-lg text-sm hover:opacity-90 transition-opacity relative"
                             style={{
-                                background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
-                                filter: 'blur(8px)',
-                                zIndex: -1
+                                background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                                boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                             }}
-                        />
-                        <span className="text-white">Попробовать снова</span>
-                    </button>
+                        >
+                            <div
+                                className="absolute inset-0 rounded-lg opacity-60"
+                                style={{
+                                    background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                    filter: 'blur(8px)',
+                                    zIndex: -1
+                                }}
+                            />
+                            <span className="text-white">Попробовать снова</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="relative w-full h-[450px] md:h-[500px] lg:h-[550px] rounded-2xl overflow-hidden group">
-            {/* Фоновое изображение */}
-            <div
-                className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                    backgroundImage: `url("${anime.bannerImage || anime.coverImage.large}")`,
-                }}
-            />
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="relative w-full h-[450px] md:h-[500px] lg:h-[550px] rounded-2xl overflow-hidden group">
+                {/* Фоновое изображение */}
+                <div
+                    className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                    style={{
+                        backgroundImage: `url("${anime.bannerImage || anime.coverImage.large}")`,
+                    }}
+                />
 
-            {/* Градиентные наложения */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                {/* Градиентные наложения */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-            {/* Контент */}
-            <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-6 lg:p-8">
-                {/* Теги и информация */}
-                <div className="flex flex-wrap items-center gap-2 mb-4">
-                    {anime.is_recommended && (
-                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-purple-600/90 to-pink-600/90 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-600/20">
-                            <span className="text-white text-xs md:text-sm font-semibold">
-                                Рекомендуем
-                            </span>
-                        </div>
-                    )}
+                {/* Контент */}
+                <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-6 lg:p-8">
+                    {/* Теги и информация */}
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                        {anime.is_recommended && (
+                            <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-purple-600/90 to-pink-600/90 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-600/20">
+                                <span className="text-white text-xs md:text-sm font-semibold">
+                                    Рекомендуем
+                                </span>
+                            </div>
+                        )}
 
-                    {isNewRelease && (
-                        <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600/90 to-cyan-600/90 backdrop-blur-sm border border-blue-400/30 shadow-lg shadow-blue-600/20">
-                            <span className="text-white text-xs md:text-sm font-semibold">
-                                Новинка
-                            </span>
-                        </div>
-                    )}
+                        {isNewRelease && (
+                            <div className="px-3 py-1 rounded-[10px] bg-gradient-to-r from-blue-600/90 to-cyan-600/90 backdrop-blur-sm border border-blue-400/30 shadow-lg shadow-blue-600/20">
+                                <span className="text-white text-xs md:text-sm font-semibold">
+                                    Новинка
+                                </span>
+                            </div>
+                        )}
 
-                    {getMainGenres().map((genre, index) => (
-                        <div
-                            key={index}
-                            className="px-3 py-1 rounded-[10px] bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:bg-gray-700/80 transition-colors"
-                        >
-                            <span className="text-gray-200 text-xs font-medium">
-                                {genre}
-                            </span>
-                        </div>
-                    ))}
+                        {getMainGenres().map((genre, index) => (
+                            <div
+                                key={index}
+                                className="px-3 py-1 rounded-[10px] bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:bg-gray-700/80 transition-colors"
+                            >
+                                <span className="text-gray-200 text-xs font-medium">
+                                    {genre}
+                                </span>
+                            </div>
+                        ))}
 
-                    {anime.meanScore && (
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-yellow-600/20 backdrop-blur-sm border border-yellow-500/30">
-                            <span className="text-yellow-400 text-sm">★</span>
-                            <span className="text-white font-semibold text-sm">
-                                {convertRating(anime.meanScore).toFixed(1)}
-                            </span>
-                        </div>
-                    )}
+                        {anime.meanScore && (
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-yellow-600/20 backdrop-blur-sm border border-yellow-500/30">
+                                <span className="text-yellow-400 text-sm">★</span>
+                                <span className="text-white font-semibold text-sm">
+                                    {convertRating(anime.meanScore).toFixed(1)}
+                                </span>
+                            </div>
+                        )}
 
-                    {anime.popularity > 0 && (
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-gray-800/60 backdrop-blur-sm border border-gray-700">
-                            <span className="text-gray-400 text-xs">👁️</span>
-                            <span className="text-gray-300 text-xs md:text-sm">
-                                {formatViews(anime.popularity)}
-                            </span>
-                        </div>
-                    )}
-                </div>
+                        {anime.popularity > 0 && (
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-[10px] bg-gray-800/60 backdrop-blur-sm border border-gray-700">
+                                <span className="text-gray-400 text-xs">👁️</span>
+                                <span className="text-gray-300 text-xs md:text-sm">
+                                    {formatViews(anime.popularity)}
+                                </span>
+                            </div>
+                        )}
+                    </div>
 
-                {/* Название и описание */}
-                <div className="mb-6 max-w-2xl">
-                    <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4 drop-shadow-lg">
-                        {anime.title_ru}
-                    </h2>
-                    <p className="text-gray-200 text-sm md:text-base lg:text-lg line-clamp-2 md:line-clamp-3">
-                        {anime.description?.replace(/<[^>]*>/g, '') || 'Описание отсутствует'}
-                    </p>
-                </div>
+                    {/* Название и описание */}
+                    <div className="mb-6 max-w-2xl">
+                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4 drop-shadow-lg">
+                            {anime.title_ru}
+                        </h2>
+                        <p className="text-gray-200 text-sm md:text-base lg:text-lg line-clamp-2 md:line-clamp-3">
+                            {anime.description?.replace(/<[^>]*>/g, '') || 'Описание отсутствует'}
+                        </p>
+                    </div>
 
-                {/* Кнопки */}
-                <div className="flex flex-wrap gap-3">
-                    <Link
-                        to={`/anime/${anime.id}`}
-                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-[10px] transition-all duration-200 hover:scale-105 active:scale-95 relative"
-                        style={{
-                            background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
-                            boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                        }}
-                    >
-                        {/* Свечение для кнопки */}
-                        <div
-                            className="absolute inset-0 rounded-[10px] opacity-60"
+                    {/* Кнопки */}
+                    <div className="flex flex-wrap gap-3">
+                        <Link
+                            to={`/anime/${anime.id}`}
+                            className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-[10px] transition-all duration-200 hover:scale-105 active:scale-95 relative"
                             style={{
-                                background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
-                                filter: 'blur(8px)',
-                                zIndex: -1
+                                background: 'linear-gradient(135deg, rgb(180, 70, 230), rgb(123, 31, 162), rgb(80, 0, 120))',
+                                boxShadow: '0 0 15px rgba(180, 70, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                             }}
-                        />
-                        <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                        <span className="text-white font-semibold text-sm md:text-base">
-                            Смотреть сейчас
-                        </span>
-                    </Link>
+                        >
+                            {/* Свечение для кнопки */}
+                            <div
+                                className="absolute inset-0 rounded-[10px] opacity-60"
+                                style={{
+                                    background: 'linear-gradient(135deg, rgba(200, 100, 255, 0.4), rgba(123, 31, 162, 0.2))',
+                                    filter: 'blur(8px)',
+                                    zIndex: -1
+                                }}
+                            />
+                            <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                            <span className="text-white font-semibold text-sm md:text-base">
+                                Смотреть сейчас
+                            </span>
+                        </Link>
 
-                    <Link
-                        to={`/anime/${anime.id}`}
-                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gray-800/70 hover:bg-[#641f86] rounded-[10px] backdrop-blur-sm border border-gray-700 transition-all duration-200 hover:scale-105 active:scale-95"
-                    >
-                        <Info className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                        <span className="text-white font-semibold text-sm md:text-base">
-                            Подробнее
-                        </span>
-                    </Link>
+                        <Link
+                            to={`/anime/${anime.id}`}
+                            className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-gray-800/70 hover:bg-[#641f86] rounded-[10px] backdrop-blur-sm border border-gray-700 transition-all duration-200 hover:scale-105 active:scale-95"
+                        >
+                            <Info className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                            <span className="text-white font-semibold text-sm md:text-base">
+                                Подробнее
+                            </span>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

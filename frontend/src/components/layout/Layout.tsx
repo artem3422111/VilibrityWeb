@@ -42,9 +42,9 @@ const Layout: React.FC = () => {
                         <TopBar />
                     </div>
 
-                    {/* Контент страницы с правильными отступами */}
-                    <main className="flex-1 w-full pt-16 lg:pt-[70px] pb-20 lg:pb-0">
-                        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+                    {/* Контент страницы с отступом для TopBar */}
+                    <main className="flex-1 w-full pt-16 lg:pt-[70px]">
+                        <div className="w-full">
                             <Outlet />
                         </div>
                         {/* Footer внутри main, но после Outlet */}

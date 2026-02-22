@@ -7,6 +7,8 @@ import Recent from './pages/Recent';
 import Favorites from './pages/Favorites';
 import Collection from './pages/Collection';
 import CategoryPage from './pages/CategoryPage';
+import AnimeDetailPage from './pages/AnimeDetailPage';
+
 
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
@@ -34,6 +36,7 @@ function App() {
           <Route path="favorites" element={<Favorites />} />
           <Route path="collection" element={<Collection />} />
           <Route path="category/:genre" element={<CategoryPage />} />
+          <Route path="anime/:id" element={<AnimeDetailPage />} />
           <Route path="search" element={<div className="p-8 text-white">Поиск</div>} />
         </Route>
       </Routes>

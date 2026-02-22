@@ -1,4 +1,3 @@
-// frontend/src/components/home/AnimeCard.tsx
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ interface AnimeCardProps {
     episodes: string;
     title: string;
     rating?: number;
-    animeId?: string;
+    animeId?: number; // Changed from string to number
     variant: 'desktop' | 'mobile';
 }
 
@@ -28,8 +27,9 @@ const AnimeCard: React.FC<AnimeCardProps> = ({
 
     const handleWatchClick = (e: React.MouseEvent) => {
         if (!animeId) return;
+        e.preventDefault();
         e.stopPropagation();
-        window.open(linkUrl, '_self');
+        window.location.href = linkUrl;
     };
 
     // Мобильная версия (компактная)
